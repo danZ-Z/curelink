@@ -1,7 +1,7 @@
+import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
-import { db } from "@/db";
 
 const AccountManager = async () => {
   const { getUser } = getKindeServerSession();

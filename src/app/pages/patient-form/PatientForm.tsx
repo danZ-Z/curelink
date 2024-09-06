@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
-
+import { UploadDropzone } from "@/lib/uploadthing";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -579,11 +579,9 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
               <FormItem className="w-full">
                 <FormLabel>Identification number</FormLabel>
                 <FormControl>
-                  <Input
-                    autoComplete="off"
-                    placeholder="123456789"
-                    {...field}
-                  />
+                  <UploadDropzone
+                  endpoint="imageUploader"
+                  className="border border-white border-solid "/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
