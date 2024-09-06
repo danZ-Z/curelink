@@ -138,7 +138,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
           {/* Full Name */}
           <FormField
             control={form.control}
-            name="fullName" // Replace with the correct field name
+            name="fullName"
             render={({ field }) => (
               <FormItem className="w-full">
                 <div className="flex flex-col gap-5 ">
@@ -161,7 +161,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Email */}
             <FormField
               control={form.control}
-              name="email" // Replace with the correct field name
+              name="email"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <div className="flex flex-col gap-5 text-zinc-500">
@@ -183,7 +183,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Phone Number */}
             <FormField
               control={form.control}
-              name="phoneNumber" // Replace with the correct field name
+              name="phoneNumber"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <div className="flex flex-col gap-5">
@@ -205,7 +205,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Birth Date */}
             <FormField
               control={form.control}
-              name="birthDate" // Replace with the correct field name
+              name="birthDate"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Birth date</FormLabel>
@@ -247,7 +247,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Gender */}
             <FormField
               control={form.control}
-              name="gender" // Replace with the correct field name
+              name="gender"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Gender</FormLabel>
@@ -281,7 +281,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Address */}
             <FormField
               control={form.control}
-              name="address" // Replace with the correct field name
+              name="address"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Address</FormLabel>
@@ -300,7 +300,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Occupation */}
             <FormField
               control={form.control}
-              name="occupation" // Replace with the correct field name
+              name="occupation"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Occupation</FormLabel>
@@ -321,7 +321,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Emergency Contact Name */}
             <FormField
               control={form.control}
-              name="emergencyContactName" // Replace with the correct field name
+              name="emergencyContactName"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Emergency contact name</FormLabel>
@@ -340,7 +340,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Emergency Contact Phone */}
             <FormField
               control={form.control}
-              name="emergencyContactPhone" // Replace with the correct field name
+              name="emergencyContactPhone"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Emergency phone number</FormLabel>
@@ -399,7 +399,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Insurance provider */}
             <FormField
               control={form.control}
-              name="insuranceProvider" // Replace with the correct field name
+              name="insuranceProvider"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Insurance provider</FormLabel>
@@ -418,7 +418,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Insurance policy number */}
             <FormField
               control={form.control}
-              name="insurancePolicyNumber" // Replace with the correct field name
+              name="insurancePolicyNumber"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Insurance policy number</FormLabel>
@@ -439,7 +439,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Allergies */}
             <FormField
               control={form.control}
-              name="allergies" // Replace with the correct field name
+              name="allergies"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Allergies (if any)</FormLabel>
@@ -459,7 +459,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Current medications */}
             <FormField
               control={form.control}
-              name="currentMedications" // Replace with the correct field name
+              name="currentMedications"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Current Medications (if any)</FormLabel>
@@ -481,7 +481,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Family medical history */}
             <FormField
               control={form.control}
-              name="familyMedicalHistory" // Replace with the correct field name
+              name="familyMedicalHistory"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Family medical history (if relevant)</FormLabel>
@@ -501,7 +501,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
             {/* Past medical history */}
             <FormField
               control={form.control}
-              name="pastMedicalHistory" // Replace with the correct field name
+              name="pastMedicalHistory"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Past medical history (if relevant)</FormLabel>
@@ -554,7 +554,26 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
           {/* Identification number */}
           <FormField
             control={form.control}
-            name="pastMedicalHistory" // Replace with the correct field name
+            name="pastMedicalHistory"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Identification number</FormLabel>
+                <FormControl>
+                  <Input
+                    autoComplete="off"
+                    placeholder="123456789"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Scanned copy of Identification number */}
+          <FormField
+            control={form.control}
+            name="pastMedicalHistory" 
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Identification number</FormLabel>
