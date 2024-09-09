@@ -37,6 +37,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ImageDown, ImageUp } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+
+import { saveConfig as _saveConfig, SaveConfigArgs } from "./actions";
+import { notFound, useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   fullName: z.string().min(2, {
@@ -51,7 +56,7 @@ const FormSchema = z.object({
   birthDate: z.date({
     required_error: "A valid birth date is required.",
   }),
-  gender: z.enum(["male", "female", "other"], {
+  gender: z.enum(["Male", "Female", "Other"], {
     errorMap: () => ({ message: "Please select a valid gender." }),
   }),
   address: z.string().min(5, {
@@ -85,18 +90,46 @@ const FormSchema = z.object({
   identificationType: z.enum(["ID", "Driving licence"], {
     errorMap: () => ({ message: "Choose your identification type" }),
   }),
+  identificationNumber: z.string().min(6, {
+    message: "Indetification number must be at least 6 characters",
+  }),
+  identificationDocument: z.string().min(0),
 });
 
 interface PatientFormProps {
-  fullName: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
   email: string;
 }
 
-export function SampleDatePicker() {
-  const [date, setDate] = useState<Date>();
-}
+const PatientForm = ({
+  firstName,
+  lastName,
+  email,
+  userId,
+}: PatientFormProps) => {
+  const [isDragOver, setIsDragOver] = useState<boolean>(false);
+  const [scannedPhotoUrl, setScannedPhotoUrl] = useState<string>("");
 
-const PatientForm = ({ fullName, email }: PatientFormProps) => {
+  const fullName = `${firstName} ${lastName}`
+
+  const router = useRouter();
+
+  const { mutate: saveConfig, isPending } = useMutation({
+    mutationKey: ["save-config"],
+    mutationFn: async (args: SaveConfigArgs) => {
+      await Promise.all([_saveConfig(args)]);
+    },
+    onError: (error) => {
+      console.error("Error saving configuration:", error);
+      notFound();
+    },
+    onSuccess: () => {
+      router.push(`/appointment-form`);
+    },
+  });
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -104,7 +137,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
       email: email || "",
       phoneNumber: "",
       birthDate: new Date(),
-      gender: "male",
+      gender: "Male",
       address: "",
       occupation: "",
       emergencyContactName: "",
@@ -117,11 +150,39 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
       familyMedicalHistory: "",
       pastMedicalHistory: "",
       identificationType: "ID",
+      identificationNumber: "",
+      identificationDocument: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {}
-  const currentYear = new Date().getFullYear();
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
+    saveConfig({
+      userId,
+      email,
+      firstName: data.fullName[0],
+      lastName: data.fullName[1],
+      phoneNumber: data.phoneNumber,
+      dateOfBirth: data.birthDate,
+      gender: data.gender,
+      address: data.address,
+      occupation: data.occupation,
+      emergencyContactName: data.emergencyContactName,
+      emergencyContactPhoneNumber: data.emergencyContactPhone,
+      primaryDoctor: data.medicianName,
+      insuranceProvider: data.insuranceProvider,
+      insurancePolicyNumber: data.insurancePolicyNumber,
+      alergies: data.allergies,
+      currentMedications: data.currentMedications,
+      familyMedicalHistory: data.familyMedicalHistory,
+      pastMedicalHistory: data.pastMedicalHistory,
+      identificationType: data.identificationType,
+      identificationNumber: data.identificationNumber,
+      scannedPhotoUrl: scannedPhotoUrl,
+      isFilledUp: true,
+    });
+  }
+
   return (
     <MaxWidthWrapper className="py-10">
       <div className="flex flex-col gap-2 pb-5">
@@ -555,7 +616,7 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
           {/* Identification number */}
           <FormField
             control={form.control}
-            name="pastMedicalHistory"
+            name="identificationNumber"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Identification number</FormLabel>
@@ -572,21 +633,67 @@ const PatientForm = ({ fullName, email }: PatientFormProps) => {
           />
 
           {/* Scanned copy of Identification number */}
-          <FormField
-            control={form.control}
-            name="pastMedicalHistory" 
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Identification number</FormLabel>
-                <FormControl>
-                  <UploadDropzone
-                  endpoint="imageUploader"
-                  className="border border-white border-solid "/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div
+            onDragOver={() => setIsDragOver(true)}
+            onDragLeave={() => setIsDragOver(false)}
+          >
+            <FormField
+              control={form.control}
+              name="identificationDocument"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Scanned copy of identification document</FormLabel>
+                  <FormControl>
+                    <UploadDropzone
+                      endpoint="imageUploader"
+                      onClientUploadComplete={(res) => {
+                        const identifier = res[0].url
+                        setScannedPhotoUrl(identifier);
+                      }}
+                      onUploadError={(error: Error) => {
+                        alert(`ERROR! ${error.message}`);
+                      }}
+                      appearance={{
+                        container: `${
+                          isDragOver ? "bg-zinc-950" : "bg-zinc-900"
+                        } flex flex-col gap-2 min-h-[calc(100vh-26.8rem-1px)] border border-white m-0`,
+                        label: "m-0 text-md w-full",
+                        allowedContent: "text-sm",
+                      }}
+                      content={{
+                        label: isDragOver ? (
+                          <p className="font-semibold text-white">
+                            <span className="text-zinc-500">Drop file</span> to
+                            upload
+                          </p>
+                        ) : (
+                          <p className="font-semibold text-white">
+                            <span className="text-zinc-500">
+                              Click to upload
+                            </span>{" "}
+                            or drag and drop a photo here
+                          </p>
+                        ),
+                        allowedContent: (
+                          <div>
+                            <p>PNG, JPG, JPEG</p>
+                            <p>Maximum size 4 MB</p>
+                          </div>
+                        ),
+                        uploadIcon: isDragOver ? (
+                          <ImageUp className="text-white size-7" />
+                        ) : (
+                          <ImageDown className="text-white size-7" />
+                        ),
+                      }}
+                      className="border border-white border-solid "
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           {/* Submit Button */}
           <Button type="submit">Submit</Button>

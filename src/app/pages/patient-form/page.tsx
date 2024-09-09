@@ -30,9 +30,7 @@ const Page = async () => {
   const lastName = profileInfo.lastName || "";
   const email = profileInfo.email || "";
 
-  const fullName = `${firstName} ${lastName}`.trim();
-
-  return <PatientForm fullName={fullName} email={email} />;
+  return <PatientForm firstName={firstName} lastName={lastName} email={email} userId={userId} />;
 };
 
 export default Page;

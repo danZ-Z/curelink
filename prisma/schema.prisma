@@ -14,25 +14,27 @@ enum Gender {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  userId    String  @unique
-  email     String? @unique
-  firstName String?
-  lastName  String?
-  phoneNumber String?
-  dateOfBirth String?
-  gender Gender?
-  address String?
-  occupation String?
-  emergencyContactName String?
+  id                          String   @id @default(cuid())
+  userId                      String   @unique
+  email                       String?  @unique
+  firstName                   String?
+  lastName                    String?
+  phoneNumber                 String?
+  dateOfBirth                 DateTime?
+  gender                      Gender?
+  address                     String?
+  occupation                  String?
+  emergencyContactName        String?
   emergencyContactPhoneNumber String?
-  primaryDoctor String?
-  insuranceProvider String?
-  insurancePolicyNumber String?
-  alergies String?
-  currentMedications String?
-  familyMedicalHistory String?
-  pastMedicalHistory String?
-  scannedPhotoUrl String?
-  isFilledUp Boolean?
+  primaryDoctor               String?
+  insuranceProvider           String?
+  insurancePolicyNumber       String?
+  alergies                    String?
+  currentMedications          String?
+  familyMedicalHistory        String?
+  pastMedicalHistory          String?
+  identificationType          String?
+  identificationNumber        String?
+  scannedPhotoUrl             String?
+  isFilledUp                  Boolean?
 }
