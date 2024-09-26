@@ -37,9 +37,6 @@ model User {
   identificationNumber        String?
   scannedPhotoUrl             String?
   isFilledUp                  Boolean?
-  pending                     String?
-  scheduled                   String?
-  cancelled                   String?
 }
 
 model Appointment {
@@ -48,15 +45,18 @@ model Appointment {
   doctor          String?
   reason          String?
   comments        String?
+  pending         Boolean?
+  scheduled       Boolean?
+  cancelled       Boolean?
   appointmentDate DateTime?
   createdAt       DateTime  @default(now())
 }
 
 model AdminInfo {
-  id              String  @id @default(cuid())
-  pendingNumber   String?
-  scheduledNumber String?
-  cancelledNumber String?
+  id              String @id @default(cuid())
+  pendingNumber   Int    @default(0)
+  scheduledNumber Int    @default(0)
+  cancelledNumber Int    @default(0)
 }
 
 model UserList {

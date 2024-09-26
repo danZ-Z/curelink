@@ -85,6 +85,9 @@ const AppointmentForm = ({
       reason: data.reason,
       comments: data.comments,
       appointmentDate: data.appointmentDate,
+      pending: true,
+      scheduled: false,
+      cancelled: false,
     });
   }
   return (

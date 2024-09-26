@@ -8,6 +8,9 @@ export type SaveConfigArgs = {
   reason: string;
   comments: string;
   appointmentDate: Date;
+  pending: boolean;
+  scheduled: boolean;
+  cancelled: boolean;
 };
 
 export async function saveConfig({
@@ -16,6 +19,9 @@ export async function saveConfig({
     reason,
     comments,
     appointmentDate,
+    pending,
+    scheduled,
+    cancelled,
   }: SaveConfigArgs) {
     await db.appointment.create({
       data: {
@@ -24,6 +30,9 @@ export async function saveConfig({
         reason,
         comments,
         appointmentDate,
+        pending,
+        scheduled,
+        cancelled,
       },
     });
   }
