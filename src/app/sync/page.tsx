@@ -7,9 +7,9 @@ const Page = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  // if (!user) {
-  //   return notFound();
-  // }
+  if (!user) {
+    return notFound();
+  }
 
   const userId = user.id;
 

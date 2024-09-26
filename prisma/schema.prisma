@@ -37,6 +37,9 @@ model User {
   identificationNumber        String?
   scannedPhotoUrl             String?
   isFilledUp                  Boolean?
+  pending                     String?
+  scheduled                   String?
+  cancelled                   String?
 }
 
 model Appointment {
@@ -51,9 +54,6 @@ model Appointment {
 
 model AdminInfo {
   id              String  @id @default(cuid())
-  pending         String?
-  scheduled       String?
-  cancelled       String?
   pendingNumber   String?
   scheduledNumber String?
   cancelledNumber String?
