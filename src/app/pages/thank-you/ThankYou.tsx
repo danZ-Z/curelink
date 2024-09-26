@@ -28,7 +28,7 @@ const ThankYou = ({ doctor, appointmentDate }: ThankYouProps) => {
           been successfully submitted!
         </div>
         <p className="text-md text-zinc-500 text-center pt-5 pb-5">
-          We'll be in touch shortly to confirm
+          We&apos;ll be in touch shortly to confirm
         </p>
         <div className="flex flex-col md:flex-row border-t border-b border-zinc-700 py-10 items-center gap-10 text-2xl text-zinc-400 px-10 text-center">
           <p>Requested appointment details:</p>

@@ -1,3 +1,4 @@
+import TestS from "@/components/TestS";
 import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/db";
 import { format } from "date-fns";
@@ -57,6 +58,7 @@ const Page = async () => {
       <div className="flex flex-row justify-between items-center mt-7 py-3 px-8 rounded-2xl bg-stone-950">
         <Image src="/CarePulseLogo.png" alt="Logo" width={80} height={80} />
         <p className="text-2xl font-semibold">Admin</p>
+        <TestS/>
         <Link
           href="/"
           className={buttonVariants({

@@ -41,19 +41,22 @@ model User {
 
 model Appointment {
   id              String    @id @default(cuid())
-  userId          String    
+  userId          String
   doctor          String?
   reason          String?
   comments        String?
   appointmentDate DateTime?
-  createdAt       DateTime @default(now())
+  createdAt       DateTime  @default(now())
 }
 
 model AdminInfo {
-  id        String  @id @default(cuid())
-  pending   String?
-  scheduled String?
-  cancelled String?
+  id              String  @id @default(cuid())
+  pending         String?
+  scheduled       String?
+  cancelled       String?
+  pendingNumber   String?
+  scheduledNumber String?
+  cancelledNumber String?
 }
 
 model UserList {
