@@ -7,9 +7,9 @@ const Page = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user) {
-    return notFound();
-  }
+  // if (!user) {
+  //   return notFound();
+  // }
 
   const userId = user.id;
 
@@ -18,6 +18,32 @@ const Page = async () => {
       userId,
     },
   });
+
+  const existingListId = "someListId";
+
+  const userList = await db.userList.findUnique({
+    where: { id: existingListId },
+  });
+
+  if (userList) {
+    if (!userList.userId.includes(userId)) {
+      await db.userList.update({
+        where: { id: existingListId },
+        data: {
+          userId: {
+            set: [...userList.userId, userId], // Append only if userId is not already present
+          },
+        },
+      });
+    }
+  } else {
+    await db.userList.create({
+      data: {
+        id: existingListId,
+        userId: [userId],
+      },
+    });
+  }
 
   if (!profileInfo) {
     return notFound();

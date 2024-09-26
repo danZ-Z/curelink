@@ -6,7 +6,7 @@ import { z } from "zod";
 import { format } from "date-fns";
 import { UploadDropzone } from "@/lib/uploadthing";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
@@ -42,6 +42,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { saveConfig as _saveConfig, SaveConfigArgs } from "./actions";
 import { notFound, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const FormSchema = z.object({
   fullName: z.string().min(2, {
@@ -112,7 +113,7 @@ const PatientForm = ({
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [scannedPhotoUrl, setScannedPhotoUrl] = useState<string>("");
 
-  const fullName = `${firstName} ${lastName}`
+  const fullName = `${firstName} ${lastName}`;
 
   const router = useRouter();
 
@@ -126,7 +127,7 @@ const PatientForm = ({
       notFound();
     },
     onSuccess: () => {
-      router.push(`/appointment-form`);
+      router.push(`/pages/appointment-form`);
     },
   });
 
@@ -156,12 +157,12 @@ const PatientForm = ({
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    const [firstName, lastName] = data.fullName.split(" ");
     saveConfig({
       userId,
       email,
-      firstName: data.fullName[0],
-      lastName: data.fullName[1],
+      firstName: firstName || "",
+      lastName: lastName || "",
       phoneNumber: data.phoneNumber,
       dateOfBirth: data.birthDate,
       gender: data.gender,
@@ -186,7 +187,20 @@ const PatientForm = ({
   return (
     <MaxWidthWrapper className="py-10">
       <div className="flex flex-col gap-2 pb-5">
-        <Image src="/CarePulseLogo.png" alt="Logo" width={80} height={80} />
+        <div className="flex flex-row items-center justify-between">
+          <Image src="/CarePulseLogo.png" alt="Logo" width={80} height={80} />
+          <Link
+                href="/"
+                className={buttonVariants({
+                  size: "sm",
+                  variant: "default",
+                  className:
+                    "py-2 w-16 bg-teal-700 hover:bg-teal-700/80 duration-500 text-xl font-semibold shadow-md shadow-teal-900",
+                })}
+              >
+                Home
+              </Link>
+        </div>
         <h1 className="font-semibold text-4xl">Welcome👋</h1>
         <p className="text-md text-zinc-500">Let us now more about yourself</p>
         <h2 className="font-semibold text-3xl mt-10">Personal information</h2>
@@ -226,10 +240,11 @@ const PatientForm = ({
               name="email"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <div className="flex flex-col gap-5 text-zinc-500">
+                  <div className="flex flex-col gap-5">
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
+                        className="text-zinc-500"
                         autoComplete="off"
                         placeholder={email}
                         readOnly
@@ -647,7 +662,7 @@ const PatientForm = ({
                     <UploadDropzone
                       endpoint="imageUploader"
                       onClientUploadComplete={(res) => {
-                        const identifier = res[0].url
+                        const identifier = res[0].url;
                         setScannedPhotoUrl(identifier);
                       }}
                       onUploadError={(error: Error) => {
@@ -696,7 +711,12 @@ const PatientForm = ({
           </div>
 
           {/* Submit Button */}
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            className="w-full py-8 text-lg tracking-wide font-semibold bg-teal-700 border border-teal-800 hover:bg-teal-600"
+          >
+            Submit
+          </Button>
         </form>
       </Form>
     </MaxWidthWrapper>

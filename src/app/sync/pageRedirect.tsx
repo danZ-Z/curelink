@@ -18,8 +18,11 @@ const PageRedirect = ({ isFilledUp }: PageRedirectProps) => {
   }, [isFilledUp, router]);
 
   return (
-    <div className="flex justify-center items-center h-screen ">
-      <div className="animate-spin rounded-full h-80 w-80 border-t-8 border-teal-600 border-solid"></div>
+    <div className="flex flex-col justify-center items-center h-screen ">
+      <div className="animate-spin rounded-full h-80 w-80 border-t-8 border-teal-600 border-solid"/>
+      <div className="pt-20 text-5xl font-semibold">
+      Loading...
+      </div>
     </div>
   );
 };

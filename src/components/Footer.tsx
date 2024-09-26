@@ -25,7 +25,7 @@ const Footer = () => {
 
   function handleClick() {
     if (value === process.env.NEXT_PUBLIC_ADMIN_CODE) {
-      router.push("/admin");
+      router.push("/pages/admin");
       setIsCorrect(true);
     } else {
       setIsCorrect(false);
@@ -52,12 +52,12 @@ const Footer = () => {
                   onChange={(value) => setValue(value)}
                 >
                   <InputOTPGroup className="flex mx-auto py-5 ">
-                    <InputOTPSlot className="size-16 " index={0} />
-                    <InputOTPSlot className="size-16" index={1} />
-                    <InputOTPSlot className="size-16" index={2} />
-                    <InputOTPSlot className="size-16" index={3} />
-                    <InputOTPSlot className="size-16" index={4} />
-                    <InputOTPSlot className="size-16" index={5} />
+                    <InputOTPSlot className="size-16 text-3xl font-semibold text-teal-500 shadow-sm shadow-white " index={0} />
+                    <InputOTPSlot className="size-16 text-3xl font-semibold text-teal-500 shadow-sm shadow-white" index={1} />
+                    <InputOTPSlot className="size-16 text-3xl font-semibold text-teal-500 shadow-sm shadow-white" index={2} />
+                    <InputOTPSlot className="size-16 text-3xl font-semibold text-teal-500 shadow-sm shadow-white" index={3} />
+                    <InputOTPSlot className="size-16 text-3xl font-semibold text-teal-500 shadow-sm shadow-white" index={4} />
+                    <InputOTPSlot className="size-16 text-3xl font-semibold text-teal-500 shadow-sm shadow-white" index={5} />
                   </InputOTPGroup>
                 </InputOTP>
                 {isCorrect ? null : (
